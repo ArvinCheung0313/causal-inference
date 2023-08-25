@@ -27,12 +27,14 @@ Machine Learning is pretty good at prediction. However, there are drawbacks:
 
 ### Notation
 - For the treament intake for unit *i*:  
-$
+
+```math
 T_i=\begin{cases}
 1 \ \text{if unit i received the treatment}\\
-0 \ \text{otherwise}\\
+0 \ \text{otherwise}
 \end{cases}
-$
+```
+
 - Take care of **potential outcomes**:
   - What happened is **factual** and what didn't happen is **counterfactual**
   - $Y_{oi}$ or $Y_i(0)$ is the potential outcome for unit *i* without the treatment
@@ -51,9 +53,7 @@ $
 ## Bias Everywhere
 Intuitively, we might say the ATE would be the average score in the treatment group minus the average score in the control group, which is  
 
-$
-E[Y|T=1] - E[Y|T=0]
-$  
+$E[Y|T=1] - E[Y|T=0]$  
 
 However, for schools that can provide tablets to their students, their $Y_{0}$ is **counterfactual**, we can't observe it, but it should probably bigger than $Y_{0}$ of the untreated schools.  
 
@@ -62,31 +62,29 @@ Hence, we have
 - **Causation** is measured by $E[Y_{1} - Y_{0}]$
 
 Let's do some math to tell you why **assocaition is not causaltion**. For the treated, the observed outcome is $Y_{1}$, for the untreated, the observed outcome is $Y_{0}$. Then we have,
-$
-E[Y|T=1] - E[Y|T=0] = E[Y_{1}|T=1] - E[Y_{0}|T=0]
-$
+
+$E[Y|T=1] - E[Y|T=0] = E[Y_{1}|T=1] - E[Y_{0}|T=0]$
 
 Now, let's add and subtract $E[Y_{0}|T=1]$, which is a counterfactual outcome. We have,
 
-$
-E[Y|T=1] - E[Y|T=0] = E[Y_{1}|T=1] - E[Y_{0}|T=0] + E[Y_{0}|T=1] - E[Y_{0}|T=1]
-$
+$E[Y|T=1] - E[Y|T=0] = E[Y_{1}|T=1] - E[Y_{0}|T=0] + E[Y_{0}|T=1] - E[Y_{0}|T=1]$
 
 Finally, with a little bit reordering,  
 
-$
+```math
 E[Y|T=1] - E[Y|T=0] = \underbrace{E[Y_1 - Y_0|T=1]}_{ATT} + \underbrace{\{ E[Y_0|T=1] - E[Y_0|T=0] \}}_{BIAS}
-$
+```
 
 ## When Association IS Causation?
 - If $E[Y_0|T=1] = E[Y_0|T=0]$, then association IS CAUSATION
-- If the treated and the untreated only differ on the treatment itself, 
-$
+- If the treated and the untreated only differ on the treatment itself, **the difference in meanse BECOMES the causal effect**
+
+```math
 \begin{align}
 E[Y_1 - Y_0|T=1] &= E[Y_1|T=1] - E[Y_0|T=1] \\
 &= E[Y_1|T=1] - E[Y_0|T=0] \\
 &= E[Y|T=1] - E[Y|T=0]
 \end{align}
-$
-In this case, **the difference in meanse BECOMES the causal effect**
+```
+
 - Also, treated and untreated are exchangeable **prior** and **after** the treatment.
